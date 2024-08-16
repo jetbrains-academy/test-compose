@@ -1,4 +1,6 @@
+import org.jetbrains.compose.ComposeBuildConfig.composeVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 fun gradleProperties(key: String) = providers.gradleProperty(key)
 
@@ -10,6 +12,8 @@ plugins {
     val kotlinVersion = "1.9.0"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion apply false
     id("io.gitlab.arturbosch.detekt") version "1.23.1"
+    id("org.jetbrains.compose")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 val detektReportMerge by tasks.registering(io.gitlab.arturbosch.detekt.report.ReportMergeTask::class) {
@@ -23,6 +27,8 @@ allprojects {
             // To be able to use the Kotlin test framework for the tests - https://github.com/jetbrains-academy/kotlin-test-framework
             url = uri("https://packages.jetbrains.team/maven/p/kotlin-test-framework/kotlin-test-framework")
         }
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        google()
     }
 }
 
@@ -59,6 +65,8 @@ configure(subprojects) {
         // By default, only the core module is included
         implementation("org.jetbrains.academy.test.system:core:2.0.5")
         testImplementation("junit:junit:4.13.2")
+
+        implementation("org.jetbrains.compose.desktop:desktop-jvm:$composeVersion")
 
         val junitJupiterVersion = "5.9.0"
         implementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")

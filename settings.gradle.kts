@@ -8,6 +8,12 @@ pluginManagement {
 
         // To be able to use the Kotlin test framework for the tests - https://github.com/jetbrains-academy/kotlin-test-framework
         maven(url = "https://packages.jetbrains.team/maven/p/kotlin-test-framework/kotlin-test-framework")
+
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    }
+    plugins {
+        id("org.jetbrains.compose").version(extra["compose.version"] as String)
+        id("org.jetbrains.kotlin.plugin.compose").version(extra["kotlin.version"] as String)
     }
 }
 
